@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from django.http import JsonResponse
+from . import models
 
-# Create your views here.
+
+def index(request, *args, **kwargs):
+    blogs = models.Blog.objects.all()
+    blog_titles = [{'title': b.title} for b in blogs]
+
+    return JsonResponse(blog_titles, safe=False)
