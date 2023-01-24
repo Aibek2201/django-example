@@ -2,21 +2,21 @@ from typing import Protocol, OrderedDict
 
 from django.db.models import QuerySet
 
-from blogs import models
+from blogs import models, repositories
 
-
-class BlogRepositoriesInterface(Protocol):
+class BlogServicesInterface(Protocol):
+    repos: repositories.BlogRepositoriesInterface
 
     def create_blog(self, data: OrderedDict) -> models.Blog: ...
 
     def get_blogs(self) -> QuerySet[models.Blog]: ...
 
 
-class BlogRepositoriesV1:
-    model = models.Blog
+class BlogServicesV1:
+    repos = repositories.BlogRepositoriesV1()
 
     def create_blog(self, data: OrderedDict) -> models.Blog:
-        return self.model.objects.create(**data)
+        return self.repos.create_blog(data=data)
 
     def get_blogs(self) -> QuerySet[models.Blog]:
-        return self.model.objects.all()
+        return self.repos.get_blogs()

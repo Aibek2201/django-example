@@ -7,6 +7,7 @@ from blogs import models
 #     blog = serializers.CharField()
 
 class BlogModelSerializer(serializers.ModelSerializer):
+    title = serializers.CharField(max_length=255)
 
     class Meta():
         model = models.Blog
