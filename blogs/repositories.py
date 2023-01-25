@@ -12,6 +12,7 @@ class BlogRepositoriesInterface(Protocol):
     def get_blogs(self) -> QuerySet[models.Blog]: ...
 
 
+
 class BlogRepositoriesV1:
     model = models.Blog
 
