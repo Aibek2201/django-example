@@ -40,10 +40,12 @@ INSTALLED_APPS = [
 
     # 3rd packages
     'rest_framework',
+    'django_filters',
     
     # local
     'blogs',
     'accounts',
+    'subjects',
 ]
 
 MIDDLEWARE = [
