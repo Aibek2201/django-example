@@ -5,13 +5,13 @@ from accounts import models
 class _AccountWalletSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = models.Account
-        fields = ('id', 'first_name', 'last_name')
+        model = models.Wallet
+        fields = ('amount', 'amount_currency')
 
 
 
 class WalletSerializer(serializers.ModelSerializer):
-    account = _AccountWalletSerializer(read_only=True)
+    # account = _AccountWalletSerializer(read_only=True)
 
     class Meta:
         model = models.Wallet
@@ -30,7 +30,16 @@ class _WalletSerializer(serializers.ModelSerializer):
 
 
 class AccountSerializer(serializers.ModelSerializer):
-    # wallets = _WalletSerializer(read_only=True, many=True)
+    total_amount = serializers.DecimalField(
+        max_digits=14, decimal_places=2, read_only=True
+    )
+    avg_amount = serializers.DecimalField(
+        max_digits=14, decimal_places=2, read_only=True
+    )
+    custom_amount = serializers.DecimalField(
+        max_digits=14, decimal_places=2, read_only=True
+    )
+    wallets = _AccountWalletSerializer(write_only=True, many=True)
     # wallets = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
      
     class Meta:
