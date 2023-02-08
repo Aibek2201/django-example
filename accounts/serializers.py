@@ -29,7 +29,15 @@ class _WalletSerializer(serializers.ModelSerializer):
         )
 
 
-class AccountSerializer(serializers.ModelSerializer):
+class CreateAccountSerializer(serializers.ModelSerializer):
+    wallets = _AccountWalletSerializer(write_only=True, many=True)
+
+    class Meta:
+        model = models.Account
+        fields = '__all__'
+
+
+class RetrieveAccountSerializer(serializers.ModelSerializer):
     total_amount = serializers.DecimalField(
         max_digits=14, decimal_places=2, read_only=True
     )
@@ -39,9 +47,15 @@ class AccountSerializer(serializers.ModelSerializer):
     custom_amount = serializers.DecimalField(
         max_digits=14, decimal_places=2, read_only=True
     )
-    wallets = _AccountWalletSerializer(write_only=True, many=True)
-    # wallets = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
-     
+    wallets = _AccountWalletSerializer(read_only=True, many=True)
+
     class Meta:
         model = models.Account
-        fields = ('__all__')
+        fields = '__all__'
+
+
+class ListAccountSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Account
+        fields = '__all__'

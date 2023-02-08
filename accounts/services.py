@@ -7,7 +7,7 @@ from accounts import models, repos
 class AccountServicesInterface(Protocol):
     account_repos: repos.AccountReposInterface
 
-    def get_account(self) -> QuerySet[models.Account]: ...
+    def get_accounts(self, action: str) -> QuerySet[models.Account]: ...
 
     def create_account(self, data: OrderedDict) -> None: ...
 
@@ -15,8 +15,11 @@ class AccountServicesInterface(Protocol):
 class AccountServicesV1:
     account_repos: repos.AccountReposInterface = repos.AccountReposV1()
 
-    def get_account(self) -> QuerySet[models.Account]:
-        return self.account_repos.get_account()
+    def get_accounts(self, action: str) -> QuerySet[models.Account]:
+        return self.account_repos.get_accounts(action=action)
 
     def create_account(self, data: OrderedDict) -> None:
-        self.account_repos.create_account(data=data)
+        try:
+            self.account_repos.create_account(data=data)
+        except Exception as e:
+            print('error!')

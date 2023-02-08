@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     # 3rd packages
     'rest_framework',
     'django_filters',
+    'debug_toolbar',
+    'django_cleanup.apps.CleanupConfig',
     
     # local
     'blogs',
@@ -56,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'src.urls'
@@ -126,7 +129,20 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'src.pagination.CustomCursorPagination',
+    'PAGE_SIZE': 10,
+}
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
